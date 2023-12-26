@@ -1,26 +1,27 @@
 #include <iostream>
 #include <math.h>
-#include <vector>
 
-double cheb(double x);
-double fx(double x);
+double my_integral(int k, double alpha);
 
 
-int main(){
+int main(int argc, char* argv[]){
+	double k, alpha, eps = 1e-16;
 	
-	int i;	
-	double mas[11] = {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0};
-	for(i = 0; i < 11; i++){
-		std::cout << "x^3 = " << fx(mas[i]) << " f(x) = " << cheb(mas[i]) << " abs = "<< fabs(cheb(mas[i]) - fx(mas[i])) << std::endl;
+	try{
+		k = std::stod(argv[1]);
+		alpha = std::stod(argv[2]);
+	}
+	catch(...){
+		std::cout << "Not able to parse arguments" << std::endl;
 	}
 	
+	if(argc < 3)return 1;
+	if(alpha < eps)return 2;
+	
+	std::cout << my_integral(k, alpha) << std::endl;
 	return 0;
 }
 
-double cheb(double x){
-	return 1.5*x*x - (9.0/16.0)*x + 1.0/32.0;	
-}
-
-double fx(double x){
-	return x*x*x;
+double my_integral(int k, double alpha){
+	return sin(k*alpha)/sin(alpha);
 }
